@@ -1,0 +1,2720 @@
+# Titanic_Dataset
+
+
+```python
+import seaborn as sns
+import numpy as np
+import pandas as pd
+```
+
+#### Loading dataset
+
+
+```python
+df = sns.load_dataset('titanic')
+df.head(20)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>survived</th>
+      <th>pclass</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>sibsp</th>
+      <th>parch</th>
+      <th>fare</th>
+      <th>embarked</th>
+      <th>class</th>
+      <th>who</th>
+      <th>adult_male</th>
+      <th>deck</th>
+      <th>embark_town</th>
+      <th>alive</th>
+      <th>alone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>7.2500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>71.2833</td>
+      <td>C</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>C</td>
+      <td>Cherbourg</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.9250</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>53.1000</td>
+      <td>S</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>C</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.0500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.4583</td>
+      <td>Q</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Queenstown</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>1</td>
+      <td>male</td>
+      <td>54.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>51.8625</td>
+      <td>S</td>
+      <td>First</td>
+      <td>man</td>
+      <td>True</td>
+      <td>E</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>2.0</td>
+      <td>3</td>
+      <td>1</td>
+      <td>21.0750</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>27.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>11.1333</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>2</td>
+      <td>female</td>
+      <td>14.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>30.0708</td>
+      <td>C</td>
+      <td>Second</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Cherbourg</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>4.0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>16.7000</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>G</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>58.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>26.5500</td>
+      <td>S</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>C</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>20.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.0500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>39.0</td>
+      <td>1</td>
+      <td>5</td>
+      <td>31.2750</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0</td>
+      <td>3</td>
+      <td>female</td>
+      <td>14.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.8542</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1</td>
+      <td>2</td>
+      <td>female</td>
+      <td>55.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>16.0000</td>
+      <td>S</td>
+      <td>Second</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>2.0</td>
+      <td>4</td>
+      <td>1</td>
+      <td>29.1250</td>
+      <td>Q</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Queenstown</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1</td>
+      <td>2</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>13.0000</td>
+      <td>S</td>
+      <td>Second</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0</td>
+      <td>3</td>
+      <td>female</td>
+      <td>31.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>18.0000</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.2250</td>
+      <td>C</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Cherbourg</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+### Cleaning the dataset
+
+#### Checking for missing values
+
+
+```python
+df.isnull()
+df.head(20)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>survived</th>
+      <th>pclass</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>sibsp</th>
+      <th>parch</th>
+      <th>fare</th>
+      <th>embarked</th>
+      <th>class</th>
+      <th>who</th>
+      <th>adult_male</th>
+      <th>deck</th>
+      <th>embark_town</th>
+      <th>alive</th>
+      <th>alone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>7.2500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>71.2833</td>
+      <td>C</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>C</td>
+      <td>Cherbourg</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.9250</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>53.1000</td>
+      <td>S</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>C</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.0500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.4583</td>
+      <td>Q</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Queenstown</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>1</td>
+      <td>male</td>
+      <td>54.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>51.8625</td>
+      <td>S</td>
+      <td>First</td>
+      <td>man</td>
+      <td>True</td>
+      <td>E</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>2.0</td>
+      <td>3</td>
+      <td>1</td>
+      <td>21.0750</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>27.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>11.1333</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>2</td>
+      <td>female</td>
+      <td>14.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>30.0708</td>
+      <td>C</td>
+      <td>Second</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Cherbourg</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>4.0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>16.7000</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>G</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>58.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>26.5500</td>
+      <td>S</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>C</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>20.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.0500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>39.0</td>
+      <td>1</td>
+      <td>5</td>
+      <td>31.2750</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0</td>
+      <td>3</td>
+      <td>female</td>
+      <td>14.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.8542</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1</td>
+      <td>2</td>
+      <td>female</td>
+      <td>55.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>16.0000</td>
+      <td>S</td>
+      <td>Second</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>2.0</td>
+      <td>4</td>
+      <td>1</td>
+      <td>29.1250</td>
+      <td>Q</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Queenstown</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1</td>
+      <td>2</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>13.0000</td>
+      <td>S</td>
+      <td>Second</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0</td>
+      <td>3</td>
+      <td>female</td>
+      <td>31.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>18.0000</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.2250</td>
+      <td>C</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Cherbourg</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+missing_values = df.isna().sum()
+missing_values
+```
+
+
+
+
+    survived         0
+    pclass           0
+    sex              0
+    age            177
+    sibsp            0
+    parch            0
+    fare             0
+    embarked         2
+    class            0
+    who              0
+    adult_male       0
+    deck           688
+    embark_town      2
+    alive            0
+    alone            0
+    dtype: int64
+
+
+
+#### Removing the columns where at least one value is missing
+
+
+```python
+dropped_column = df.dropna(axis='columns')
+dropped_column.head(20)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>survived</th>
+      <th>pclass</th>
+      <th>sex</th>
+      <th>sibsp</th>
+      <th>parch</th>
+      <th>fare</th>
+      <th>class</th>
+      <th>who</th>
+      <th>adult_male</th>
+      <th>alive</th>
+      <th>alone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>1</td>
+      <td>0</td>
+      <td>7.2500</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>1</td>
+      <td>0</td>
+      <td>71.2833</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.9250</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>1</td>
+      <td>0</td>
+      <td>53.1000</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.0500</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.4583</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>1</td>
+      <td>male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>51.8625</td>
+      <td>First</td>
+      <td>man</td>
+      <td>True</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>3</td>
+      <td>1</td>
+      <td>21.0750</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>0</td>
+      <td>2</td>
+      <td>11.1333</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>2</td>
+      <td>female</td>
+      <td>1</td>
+      <td>0</td>
+      <td>30.0708</td>
+      <td>Second</td>
+      <td>child</td>
+      <td>False</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>1</td>
+      <td>1</td>
+      <td>16.7000</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>0</td>
+      <td>0</td>
+      <td>26.5500</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.0500</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>1</td>
+      <td>5</td>
+      <td>31.2750</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0</td>
+      <td>3</td>
+      <td>female</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.8542</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1</td>
+      <td>2</td>
+      <td>female</td>
+      <td>0</td>
+      <td>0</td>
+      <td>16.0000</td>
+      <td>Second</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>4</td>
+      <td>1</td>
+      <td>29.1250</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1</td>
+      <td>2</td>
+      <td>male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>13.0000</td>
+      <td>Second</td>
+      <td>man</td>
+      <td>True</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0</td>
+      <td>3</td>
+      <td>female</td>
+      <td>1</td>
+      <td>0</td>
+      <td>18.0000</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.2250</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Removing duplicate rows based on all columns
+
+
+```python
+df = df.drop_duplicates()
+df.head(20)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>survived</th>
+      <th>pclass</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>sibsp</th>
+      <th>parch</th>
+      <th>fare</th>
+      <th>embarked</th>
+      <th>class</th>
+      <th>who</th>
+      <th>adult_male</th>
+      <th>deck</th>
+      <th>embark_town</th>
+      <th>alive</th>
+      <th>alone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>7.2500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>71.2833</td>
+      <td>C</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>C</td>
+      <td>Cherbourg</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.9250</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>53.1000</td>
+      <td>S</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>C</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.0500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.4583</td>
+      <td>Q</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Queenstown</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>1</td>
+      <td>male</td>
+      <td>54.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>51.8625</td>
+      <td>S</td>
+      <td>First</td>
+      <td>man</td>
+      <td>True</td>
+      <td>E</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>2.0</td>
+      <td>3</td>
+      <td>1</td>
+      <td>21.0750</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>27.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>11.1333</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>2</td>
+      <td>female</td>
+      <td>14.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>30.0708</td>
+      <td>C</td>
+      <td>Second</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Cherbourg</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>4.0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>16.7000</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>G</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>58.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>26.5500</td>
+      <td>S</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>C</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>20.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.0500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>39.0</td>
+      <td>1</td>
+      <td>5</td>
+      <td>31.2750</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0</td>
+      <td>3</td>
+      <td>female</td>
+      <td>14.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.8542</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1</td>
+      <td>2</td>
+      <td>female</td>
+      <td>55.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>16.0000</td>
+      <td>S</td>
+      <td>Second</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>2.0</td>
+      <td>4</td>
+      <td>1</td>
+      <td>29.1250</td>
+      <td>Q</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Queenstown</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1</td>
+      <td>2</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>13.0000</td>
+      <td>S</td>
+      <td>Second</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0</td>
+      <td>3</td>
+      <td>female</td>
+      <td>31.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>18.0000</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.2250</td>
+      <td>C</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Cherbourg</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Double checking if all duplicate rows have been removed
+
+
+```python
+df.duplicated().sum()
+```
+
+
+
+
+    0
+
+
+
+#### Renaming the columns sibsp and parch to sibling/spouse and parent/child
+
+
+```python
+df = df.rename({'sibsp':'sibling/spouse', 'parch':'parent/child'}, axis='columns')
+df.head(10)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>survived</th>
+      <th>pclass</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>sibling/spouse</th>
+      <th>parent/child</th>
+      <th>fare</th>
+      <th>embarked</th>
+      <th>class</th>
+      <th>who</th>
+      <th>adult_male</th>
+      <th>deck</th>
+      <th>embark_town</th>
+      <th>alive</th>
+      <th>alone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>7.2500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>71.2833</td>
+      <td>C</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>C</td>
+      <td>Cherbourg</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.9250</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>53.1000</td>
+      <td>S</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>C</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.0500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.4583</td>
+      <td>Q</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Queenstown</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>1</td>
+      <td>male</td>
+      <td>54.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>51.8625</td>
+      <td>S</td>
+      <td>First</td>
+      <td>man</td>
+      <td>True</td>
+      <td>E</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>2.0</td>
+      <td>3</td>
+      <td>1</td>
+      <td>21.0750</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>27.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>11.1333</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>2</td>
+      <td>female</td>
+      <td>14.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>30.0708</td>
+      <td>C</td>
+      <td>Second</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Cherbourg</td>
+      <td>yes</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Sorting by columns 'pclass' and 'fare' in descending order
+
+
+```python
+df.sort_values(by=['pclass', 'fare'], ascending=False).head(10)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>survived</th>
+      <th>pclass</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>sibling/spouse</th>
+      <th>parent/child</th>
+      <th>fare</th>
+      <th>embarked</th>
+      <th>class</th>
+      <th>who</th>
+      <th>adult_male</th>
+      <th>deck</th>
+      <th>embark_town</th>
+      <th>alive</th>
+      <th>alone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>159</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>8</td>
+      <td>2</td>
+      <td>69.5500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>180</th>
+      <td>0</td>
+      <td>3</td>
+      <td>female</td>
+      <td>NaN</td>
+      <td>8</td>
+      <td>2</td>
+      <td>69.5500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>1</td>
+      <td>3</td>
+      <td>male</td>
+      <td>32.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>56.4958</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>169</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>28.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>56.4958</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>509</th>
+      <td>1</td>
+      <td>3</td>
+      <td>male</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>56.4958</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>643</th>
+      <td>1</td>
+      <td>3</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>56.4958</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>826</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>56.4958</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>11.0</td>
+      <td>5</td>
+      <td>2</td>
+      <td>46.9000</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>0</td>
+      <td>3</td>
+      <td>female</td>
+      <td>16.0</td>
+      <td>5</td>
+      <td>2</td>
+      <td>46.9000</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>386</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>1.0</td>
+      <td>5</td>
+      <td>2</td>
+      <td>46.9000</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Checking descriptive statistics
+
+
+```python
+df.describe()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>survived</th>
+      <th>pclass</th>
+      <th>age</th>
+      <th>sibling/spouse</th>
+      <th>parent/child</th>
+      <th>fare</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>784.000000</td>
+      <td>784.000000</td>
+      <td>678.000000</td>
+      <td>784.000000</td>
+      <td>784.000000</td>
+      <td>784.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>0.411990</td>
+      <td>2.243622</td>
+      <td>29.869351</td>
+      <td>0.522959</td>
+      <td>0.415816</td>
+      <td>34.711740</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.492507</td>
+      <td>0.855056</td>
+      <td>14.759076</td>
+      <td>0.986231</td>
+      <td>0.836922</td>
+      <td>52.160151</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.420000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>20.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>8.050000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.000000</td>
+      <td>3.000000</td>
+      <td>28.250000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>15.900000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>1.000000</td>
+      <td>3.000000</td>
+      <td>39.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>34.109350</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>1.000000</td>
+      <td>3.000000</td>
+      <td>80.000000</td>
+      <td>8.000000</td>
+      <td>6.000000</td>
+      <td>512.329200</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Finding the average fare and age for each class
+
+
+```python
+df[['class', 'age', 'fare']].groupby('class').mean()[['fare', 'age']]
+```
+
+    C:\Users\User\AppData\Local\Temp\ipykernel_8304\1361112007.py:1: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+      df[['class', 'age', 'fare']].groupby('class').mean()[['fare', 'age']]
+    
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fare</th>
+      <th>age</th>
+    </tr>
+    <tr>
+      <th>class</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>First</th>
+      <td>84.487812</td>
+      <td>38.310378</td>
+    </tr>
+    <tr>
+      <th>Second</th>
+      <td>21.835404</td>
+      <td>29.898302</td>
+    </tr>
+    <tr>
+      <th>Third</th>
+      <td>13.656223</td>
+      <td>25.180150</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Adding a new column showing the fare as a percentage of total
+
+
+```python
+df['fare in %'] = (df['fare'] / df['fare'].sum()) * 100
+df.head(20)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>survived</th>
+      <th>pclass</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>sibling/spouse</th>
+      <th>parent/child</th>
+      <th>fare</th>
+      <th>embarked</th>
+      <th>class</th>
+      <th>who</th>
+      <th>adult_male</th>
+      <th>deck</th>
+      <th>embark_town</th>
+      <th>alive</th>
+      <th>alone</th>
+      <th>fare in %</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>7.2500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+      <td>0.026641</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>71.2833</td>
+      <td>C</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>C</td>
+      <td>Cherbourg</td>
+      <td>yes</td>
+      <td>False</td>
+      <td>0.261936</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.9250</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+      <td>0.029121</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>53.1000</td>
+      <td>S</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>C</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>False</td>
+      <td>0.195120</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.0500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+      <td>0.029580</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.4583</td>
+      <td>Q</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Queenstown</td>
+      <td>no</td>
+      <td>True</td>
+      <td>0.031081</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>1</td>
+      <td>male</td>
+      <td>54.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>51.8625</td>
+      <td>S</td>
+      <td>First</td>
+      <td>man</td>
+      <td>True</td>
+      <td>E</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+      <td>0.190573</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>2.0</td>
+      <td>3</td>
+      <td>1</td>
+      <td>21.0750</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+      <td>0.077442</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>27.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>11.1333</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>False</td>
+      <td>0.040910</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>2</td>
+      <td>female</td>
+      <td>14.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>30.0708</td>
+      <td>C</td>
+      <td>Second</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Cherbourg</td>
+      <td>yes</td>
+      <td>False</td>
+      <td>0.110498</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>4.0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>16.7000</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>G</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>False</td>
+      <td>0.061365</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>1</td>
+      <td>female</td>
+      <td>58.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>26.5500</td>
+      <td>S</td>
+      <td>First</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>C</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+      <td>0.097560</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>20.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.0500</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+      <td>0.029580</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>39.0</td>
+      <td>1</td>
+      <td>5</td>
+      <td>31.2750</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+      <td>0.114922</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0</td>
+      <td>3</td>
+      <td>female</td>
+      <td>14.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.8542</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>True</td>
+      <td>0.028861</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1</td>
+      <td>2</td>
+      <td>female</td>
+      <td>55.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>16.0000</td>
+      <td>S</td>
+      <td>Second</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+      <td>0.058793</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0</td>
+      <td>3</td>
+      <td>male</td>
+      <td>2.0</td>
+      <td>4</td>
+      <td>1</td>
+      <td>29.1250</td>
+      <td>Q</td>
+      <td>Third</td>
+      <td>child</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Queenstown</td>
+      <td>no</td>
+      <td>False</td>
+      <td>0.107022</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1</td>
+      <td>2</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>13.0000</td>
+      <td>S</td>
+      <td>Second</td>
+      <td>man</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>yes</td>
+      <td>True</td>
+      <td>0.047770</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0</td>
+      <td>3</td>
+      <td>female</td>
+      <td>31.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>18.0000</td>
+      <td>S</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Southampton</td>
+      <td>no</td>
+      <td>False</td>
+      <td>0.066142</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>1</td>
+      <td>3</td>
+      <td>female</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7.2250</td>
+      <td>C</td>
+      <td>Third</td>
+      <td>woman</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Cherbourg</td>
+      <td>yes</td>
+      <td>True</td>
+      <td>0.026549</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### How many survivors were female compared to male?
+
+
+```python
+survivors_by_gender = df.groupby('sex')['survived'].sum()
+survivors_by_gender
+```
+
+
+
+
+    sex
+    female    217
+    male      106
+    Name: survived, dtype: int64
+
+
+
+
+```python
+
+```
